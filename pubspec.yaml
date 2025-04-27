@@ -19,6 +19,8 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  # for different flavor integration
+  flutter_flavorizr: ^2.2.3
 
 flutter:
   uses-material-design: true
@@ -38,3 +40,48 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+
+# To add custom environment variables, create a file named .env in the root of your project
+# To generate the flavors, run the following command:
+# flutter pub run flutter_flavorizr
+flavorizr:
+  ide: "vscode"
+  app:
+    android:
+      applicationId: "com.majharulDev.qtechy"
+      versionCode: 1
+      versionName: "1.0.0"
+      minSdkVersion: 21
+      targetSdkVersion: 33
+      compileSdkVersion: 33
+      buildToolsVersion: "33.0.0"
+    ios:
+      bundleId: "com.majharulDev.qtechy"
+      versionCode: 1
+      versionName: "1.0.0"
+  flavors:
+    development:
+      app:
+        name: "Qtechy dev"
+
+      android:
+        applicationId: "com.majharulDev.qtechyDev"
+      ios:
+        bundleId: "com.majharulDev.qtechyDev"
+      macos:
+        bundleId: "com.majharulDev.qtechyDev"
+      entrypoint: "lib/app/env/main_development.dart"
+    production:
+      app:
+        name: "Qtechy prod"
+
+      android:
+        applicationId: "com.majharulDev.qtechyProd"
+      ios:
+        bundleId: "com.majharulDev.qtechyProd"
+      macos:
+        bundleId: "com.majharulDev.qtechyProd"
+      entrypoint: "lib/app/env/main_production.dart"
+
+
