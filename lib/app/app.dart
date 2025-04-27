@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:qtechy/core/theme/theme.dart';
 
 import 'flavors.dart';
 import '../pages/my_home_page.dart';
@@ -12,9 +13,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: Flavors.title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       home: _flavorBanner(
         child: const MyHomePage(),
         show: kDebugMode,
