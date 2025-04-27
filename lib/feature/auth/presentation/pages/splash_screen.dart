@@ -1,9 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qtechy/feature/auth/presentation/cubit/login_cubit.dart';
-import 'package:qtechy/feature/auth/presentation/pages/login_page.dart';
-import '../../../dashborad/presentation/pages/home_pages.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _imageLoaded = true; // Default to true
+  bool _imageLoaded = true;
 
   @override
   void initState() {
@@ -22,21 +22,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkAuthentication() async {
-    await Future.delayed(const Duration(seconds: 2)); // Simulating loading time
+    await Future.delayed(const Duration(seconds: 2));
 
-    if (!mounted) return; // Ensure widget is still in the tree
+    if (!mounted) return;
 
     final loginCubit = context.read<LoginCubit>();
     final token = await loginCubit.storageService.getToken();
 
-    if (!mounted) return; // Check again before navigation
+    if (!mounted) return;
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => token != null ? const HomePage() : LoginPage(),
-      ),
-    );
+    if (token != null) {
+      context.go('/home');
+    } else {
+      context.go('/login');
+    }
   }
 
   @override
@@ -53,8 +52,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 150,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
-                      print(
-                          "❌ ERROR: Unable to load dev-icon.png"); // Debugging
+                      if (kDebugMode) {
+                        print(" ERROR: Unable to load dev-icon.png");
+                      }
                       setState(() {
                         _imageLoaded = false;
                       });
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     style: TextStyle(color: Colors.red, fontSize: 16)),
             const SizedBox(height: 20),
             Text(
-              "title".tr(), // ✅ Ensures localization works in SplashScreen
+              "title".tr(),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],

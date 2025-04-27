@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../dashborad/presentation/pages/home_pages.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/login_cubit.dart';
 import '../cubit/login_state.dart';
 
@@ -19,9 +19,7 @@ class LoginPage extends StatelessWidget {
           if (state is LoginSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Login Successful!")));
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => HomePage()));
-            // Navigate to next screen
+            context.go('/home');
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));

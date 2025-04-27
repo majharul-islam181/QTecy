@@ -1,12 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart' as el;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qtechy/core/language/app_language.dart';
+import '../core/router/app_router.dart';
 import '../core/theme/theme.dart';
 import '../feature/auth/presentation/cubit/login_cubit.dart';
-import '../feature/auth/presentation/pages/login_page.dart';
-import '../feature/auth/presentation/pages/splash_screen.dart';
 import 'flavors.dart';
 // import 'injection_container.dart' as di;
 import '../core/injections/dependency_injection.dart' as di;
@@ -29,7 +26,7 @@ class App extends StatelessWidget {
           return Directionality( 
             textDirection: ui.TextDirection.ltr, 
             child: _flavorBanner(
-              child: MaterialApp(
+              child: MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 title: Flavors.title,
                 theme: AppTheme.lightTheme,
@@ -37,7 +34,7 @@ class App extends StatelessWidget {
                 locale: context.locale, 
                 supportedLocales: context.supportedLocales,
                 localizationsDelegates: context.localizationDelegates,
-                home: const SplashScreen(),
+                 routerConfig: AppRouter.router,
               ),
             ),
           );
