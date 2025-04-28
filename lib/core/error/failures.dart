@@ -5,6 +5,8 @@ abstract class Failure extends Equatable {
   const Failure({this.properties = const <dynamic>[]});
 
   final List properties;
+   String get message => properties.isNotEmpty ? properties[0] : 'Unknown error';
+
 
   @override
   List<Object> get props => [properties];

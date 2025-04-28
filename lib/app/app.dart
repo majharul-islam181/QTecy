@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../core/router/app_router.dart';
 import '../core/theme/theme.dart';
 import '../feature/auth/presentation/cubit/login_cubit.dart';
+import '../feature/dashborad/presentation/bloc/product_bloc.dart';
 import 'flavors.dart';
 // import 'injection_container.dart' as di;
 import '../core/injections/dependency_injection.dart' as di;
@@ -20,6 +21,11 @@ class App extends StatelessWidget {
         BlocProvider<LoginCubit>(
           create: (_) => di.sl<LoginCubit>(), 
         ),
+          BlocProvider<ProductBloc>(
+          create: (_) => di.sl<ProductBloc>(),
+        ),
+        
+        
       ],
       child: Builder(
         builder: (context) {

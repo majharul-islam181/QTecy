@@ -26,10 +26,11 @@ class AuthRepositoryImpl implements AuthRepository {
           .call(response, (data) => LoginResponse.fromJson(data));
 
       final user = User(
-        id: loginResponse.id,            // now no loginResponse.data
+        id: loginResponse.id,           
         name: loginResponse.name,
         email: loginResponse.email,
         mobile: loginResponse.phone,
+        token: loginResponse.token,
       );
 
       return Right(user);

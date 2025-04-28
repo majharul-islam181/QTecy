@@ -37,6 +37,7 @@ class StorageService {
         name: userMap['name'],
         email: userMap['email'],
         mobile: userMap['phone'],
+        token: userMap['token'] ?? '', 
       );
     }
     return null;
