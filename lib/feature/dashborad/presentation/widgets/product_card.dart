@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
 
-  const ProductCard({Key? key, required this.product}) : super(key: key);
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +30,24 @@ class ProductCard extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: Image.network(
-            product.image,
+          child: CachedNetworkImage(
+            imageUrl: product.image,
             height: 150,
             width: double.infinity,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
+            // Shimmer effect for the placeholder while loading
+            placeholder: (context, url) {
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.white,
+                child: Container(
+                  height: 150,
+                  width: double.infinity,
+                  color: Colors.grey.shade300,
+                ),
+              );
+            },
+            errorWidget: (context, url, error) => Container(
               color: Colors.grey.shade200,
               height: 150,
               child: const Icon(Icons.broken_image, size: 50),
