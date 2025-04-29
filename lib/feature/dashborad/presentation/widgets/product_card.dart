@@ -35,7 +35,6 @@ class ProductCard extends StatelessWidget {
             height: 150,
             width: double.infinity,
             fit: BoxFit.cover,
-            // Shimmer effect for the placeholder while loading
             placeholder: (context, url) {
               return Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
@@ -118,7 +117,9 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Text(
-        "${_calculateDiscount(product.offerPrice, product.currentPrice)}% OFF",
+        product.offerPrice == 0
+            ? "0 % OFF"
+            : "${_calculateDiscount(product.offerPrice, product.currentPrice)}% OFF",
         style: const TextStyle(fontSize: 12, color: Colors.red),
       ),
     );
