@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qtechy/feature/dashborad/presentation/pages/setting_bottom_sheet.dart';
 import '../../../../core/injections/dependency_injection.dart';
 import '../../../../core/services/storage_service.dart';
 import '../../domain/entities/product.dart';
 import '../../../auth/domain/entities/user.dart';
-import '../../../auth/presentation/cubit/login_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../bloc/product_bloc.dart';
 import '../bloc/product_event.dart';
@@ -48,20 +48,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void _sortProducts(String sortType) {
-    setState(() {
-      if (sortType == 'PriceHighToLow') {
-        displayedProducts
-            .sort((a, b) => b.currentPrice.compareTo(a.currentPrice));
-      } else if (sortType == 'PriceLowToHigh') {
-        displayedProducts
-            .sort((a, b) => a.currentPrice.compareTo(b.currentPrice));
-      } else if (sortType == 'Rating') {
-        displayedProducts.sort((a, b) => b.rating.compareTo(a.rating));
-      }
-    });
-  }
-
   void _filterProducts(String query) {
     if (query.isEmpty) {
       setState(() {
@@ -78,36 +64,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _showSortBottomSheet() {
+  void _showSettingsBottomSheet() {
     showModalBottomSheet(
       context: context,
       builder: (_) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: const Text("Price - High to Low"),
-              onTap: () {
-                Navigator.pop(context);
-                _sortProducts('PriceHighToLow');
-              },
-            ),
-            ListTile(
-              title: const Text("Price - Low to High"),
-              onTap: () {
-                Navigator.pop(context);
-                _sortProducts('PriceLowToHigh');
-              },
-            ),
-            ListTile(
-              title: const Text("Rating"),
-              onTap: () {
-                Navigator.pop(context);
-                _sortProducts('Rating');
-              },
-            ),
-          ],
-        );
+        return SingleChildScrollView(child: SettingsBottomSheet(user: user!));
       },
     );
   }
@@ -116,29 +77,28 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Products".tr()),
+        title: Text(
+          "title".tr(),
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.sort),
-            onPressed: _showSortBottomSheet,
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => context.read<LoginCubit>().logoutUser(),
+            icon: const Icon(Icons.settings),
+            onPressed: _showSettingsBottomSheet,
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
+          preferredSize: const Size.fromHeight(80),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             child: TextField(
               controller: searchController,
               onChanged: _filterProducts,
               decoration: InputDecoration(
-                hintText: "Search products...",
+                hintText: "searching_product".tr(),
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 filled: true,
                 fillColor: Colors.white,
@@ -176,7 +136,7 @@ class _HomePageState extends State<HomePage> {
     return GridView.builder(
       padding: const EdgeInsets.all(12.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, 
+        crossAxisCount: 2,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
         childAspectRatio: 0.65,
@@ -184,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       itemCount: products.length,
       itemBuilder: (context, index) {
         final product = products[index];
-        return ProductCard(product: product);  
+        return ProductCard(product: product);
       },
     );
   }

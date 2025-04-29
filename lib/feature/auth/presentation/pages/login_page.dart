@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,12 +14,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(title:  Text("login".tr())),
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Login Successful!")));
+                 SnackBar(content: Text("login_sc!".tr())));
             context.go('/home');
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context)
@@ -28,13 +29,15 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(labelText: "Email")),
+                  decoration: InputDecoration(labelText: "email".tr())),
               TextField(
                   controller: passwordController,
-                  decoration: const InputDecoration(labelText: "Password"),
+                  decoration: InputDecoration(labelText: "password".tr()),
                   obscureText: true),
               const SizedBox(height: 20),
               BlocBuilder<LoginCubit, LoginState>(
