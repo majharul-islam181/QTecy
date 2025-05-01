@@ -41,6 +41,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/language/
+    - assets/app_screenshorts/
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -52,7 +53,6 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-
 
 # To add custom environment variables, create a file named .env in the root of your project
 # To generate the flavors, run the following command:
@@ -95,5 +95,3 @@ flavorizr:
       macos:
         bundleId: "com.majharulDev.qtechyProd"
       entrypoint: "lib/app/env/main_production.dart"
-
-
