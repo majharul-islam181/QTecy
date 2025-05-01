@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -89,7 +91,7 @@ class SettingsBottomSheet extends StatelessWidget {
             title: "logout".tr(),
             subtitle: "sign_out".tr(),
             onTap: () =>
-                _showLogoutConfirmationDialog(context), // Show logout dialog
+                _showLogoutConfirmationDialog(context), 
             iconColor: iconColor,
           ),
         ],
@@ -154,14 +156,14 @@ class SettingsBottomSheet extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context); 
               },
               child:  Text("no".tr()),
             ),
             TextButton(
               onPressed: () async {
                 await context.read<LoginCubit>().logoutUser();
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context);
                 context.go('/login'); // Navigate to login screen
               },
               child:  Text("yes".tr()),

@@ -7,7 +7,7 @@ class ApiClient {
   ApiClient() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'http://192.168.0.101:6000/api/', // for now we are using localhost
+        baseUrl: 'https://qtechy-backend.onrender.com/api/', // Replace with production base URL
         headers: {'Content-Type': 'application/json'},
       ),
     );

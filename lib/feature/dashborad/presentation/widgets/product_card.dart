@@ -97,7 +97,7 @@ class ProductCard extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "\$${product.currentPrice.toStringAsFixed(0)}", // New price
+          "\$${product.currentPrice.toStringAsFixed(0)}", 
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(width: 6),
