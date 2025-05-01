@@ -6,6 +6,50 @@ import '../../../../core/services/storage_service.dart';
 import 'login_state.dart';
 
 
+// class LoginCubit extends Cubit<LoginState> { 
+//   final LoginUseCase loginUseCase;
+//   final StorageService storageService;
+
+//   LoginCubit({required this.loginUseCase, required this.storageService}) : super(LoginInitial());
+
+//   Future<void> loginUser(String email, String password) async {
+//     emit(LoginLoading());
+
+//     final result = await loginUseCase(LoginParams(email: email, password: password));
+
+//     result.fold(
+//       (failure) {
+//         emit(LoginError(message: _mapFailureToMessage(failure)));
+//       },
+//       (user) async {
+//         await storageService.saveToken(user.token);
+//         await storageService.saveUserData(user);
+//         emit(LoginSuccess(user: user));
+//       },
+//     );
+//   }
+
+
+//   Future<void> logoutUser() async {
+//   await storageService.clearData();
+//   emit(LoginInitial()); 
+// }
+
+
+// String _mapFailureToMessage(Failure failure) {
+//   if (failure is ServerFailure) {
+//     return failure.error;
+//   } else if (failure is ApiFailure) {
+//     return failure.error;
+//   } else if (failure is DioFailure) {
+//     return failure.error; 
+//   } else {
+//     return 'Unexpected error occurred.';
+//   }
+// }
+// }
+
+
 class LoginCubit extends Cubit<LoginState> { 
   final LoginUseCase loginUseCase;
   final StorageService storageService;
@@ -13,6 +57,11 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required this.loginUseCase, required this.storageService}) : super(LoginInitial());
 
   Future<void> loginUser(String email, String password) async {
+    if (loginUseCase == null) {
+      emit(LoginError(message: "LoginUseCase is not initialized."));
+      return;
+    }
+    
     emit(LoginLoading());
 
     final result = await loginUseCase(LoginParams(email: email, password: password));
@@ -29,12 +78,10 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
-
   Future<void> logoutUser() async {
-  await storageService.clearData();
-  emit(LoginInitial()); 
+    await storageService.clearData();
+    emit(LoginInitial()); 
 }
-
 
 String _mapFailureToMessage(Failure failure) {
   if (failure is ServerFailure) {
@@ -48,4 +95,3 @@ String _mapFailureToMessage(Failure failure) {
   }
 }
 }
-
